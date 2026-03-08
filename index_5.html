@@ -1,0 +1,1354 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>うぃずじょぶ！ | 住まいと仕事を同時にGET！</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Noto+Serif+JP:wght@700&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              teal:      '#00B4A6',
+              'teal-dark': '#009488',
+              'teal-light': '#E0F7F5',
+              'teal-mid': '#B2E8E4',
+              orange:    '#FF7A2E',
+              'orange-light': '#FFF0E8',
+            },
+          },
+          fontFamily: {
+            sans: ['"Noto Sans JP"', 'sans-serif'],
+            serif: ['"Noto Serif JP"', 'serif'],
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    /* ===== グローバル ===== */
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      color: #333;
+      background: #fff;
+      overflow-x: hidden;
+    }
+
+    /* ===== カラー変数 ===== */
+    :root {
+      --teal:        #00B4A6;
+      --teal-dark:   #009488;
+      --teal-light:  #E0F7F5;
+      --teal-mid:    #B2E8E4;
+      --orange:      #FF7A2E;
+      --white:       #ffffff;
+    }
+
+    /* ===== ヘッダー ===== */
+    header {
+      background: #fff;
+      border-bottom: 2px solid var(--teal);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .header-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo {
+      font-size: clamp(1.3rem, 4vw, 1.8rem);
+      font-weight: 900;
+      color: var(--teal);
+      letter-spacing: 0.02em;
+    }
+    .logo span { color: #FF7A2E; }
+    .hamburger-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+    }
+    .hamburger-btn span {
+      display: block;
+      width: 24px;
+      height: 2.5px;
+      background: var(--teal);
+      border-radius: 2px;
+      transition: transform 0.3s;
+    }
+    .hamburger-label {
+      font-size: 0.6rem;
+      color: var(--teal);
+      font-weight: 700;
+      margin-top: 3px;
+    }
+
+    /* ===== ヒーローセクション ===== */
+    .hero {
+      background: linear-gradient(135deg, var(--teal) 0%, var(--teal-dark) 100%);
+      position: relative;
+      overflow: hidden;
+      min-height: 420px;
+    }
+    .hero-bubbles { position: absolute; inset: 0; pointer-events: none; }
+    .bubble {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.12);
+    }
+    .b1  { width: 80px;  height: 80px;  top: 5%;   left: -20px; }
+    .b2  { width: 50px;  height: 50px;  top: 30%;  left: 10%;  }
+    .b3  { width: 120px; height: 120px; top: -20px; right: 15%; }
+    .b4  { width: 40px;  height: 40px;  bottom: 20%; left: 5%; }
+    .b5  { width: 60px;  height: 60px;  bottom: 5%;  right: 5%; }
+    .hero-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 40px 20px 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      position: relative;
+      z-index: 2;
+    }
+    .hero-text { flex: 1; color: #fff; }
+    .hero-text h1 {
+      font-size: clamp(1.5rem, 5vw, 2.6rem);
+      font-weight: 900;
+      line-height: 1.3;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.2);
+    }
+    .hero-text h1 .highlight {
+      color: #FFDD57;
+      font-size: clamp(1.8rem, 6vw, 3rem);
+      display: block;
+    }
+    .hero-img {
+      flex: 0 0 auto;
+      width: clamp(140px, 35vw, 280px);
+    }
+    .hero-img img {
+      width: 100%;
+      height: auto;
+      border-radius: 12px;
+      object-fit: cover;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.25);
+    }
+
+    /* バッジ行 */
+    .hero-badges {
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(6px);
+      border-top: 1px solid rgba(255,255,255,0.3);
+    }
+    .hero-badges-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .badge {
+      background: rgba(255,255,255,0.9);
+      color: var(--teal-dark);
+      font-weight: 700;
+      font-size: clamp(0.7rem, 2.5vw, 0.85rem);
+      padding: 6px 14px;
+      border-radius: 50px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    }
+    .badge svg { width: 16px; height: 16px; }
+
+    /* カウントダウン */
+    .countdown-badge {
+      background: var(--orange);
+      color: #fff;
+      font-size: clamp(0.65rem, 2vw, 0.8rem);
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 50px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 2px 8px rgba(255,122,46,0.4);
+    }
+    .countdown-timer {
+      font-size: clamp(1rem, 3.5vw, 1.4rem);
+      font-weight: 900;
+      color: #FFDD57;
+    }
+
+    /* CTAボタン行 */
+    .hero-cta-bar {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 16px 20px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .btn-line {
+      flex: 1;
+      min-width: 160px;
+      background: #06C755;
+      color: #fff;
+      font-weight: 900;
+      font-size: clamp(0.85rem, 2.5vw, 1rem);
+      padding: 14px 20px;
+      border-radius: 50px;
+      text-align: center;
+      cursor: pointer;
+      border: none;
+      box-shadow: 0 4px 12px rgba(6,199,85,0.35);
+      transition: opacity 0.2s, transform 0.15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-decoration: none;
+    }
+    .btn-line:hover { opacity: 0.88; transform: translateY(-2px); }
+    .btn-chance {
+      flex: 1;
+      min-width: 160px;
+      background: var(--orange);
+      color: #fff;
+      font-weight: 900;
+      font-size: clamp(0.8rem, 2.5vw, 0.95rem);
+      padding: 14px 20px;
+      border-radius: 50px;
+      text-align: center;
+      cursor: pointer;
+      border: none;
+      box-shadow: 0 4px 12px rgba(255,122,46,0.35);
+      transition: opacity 0.2s, transform 0.15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-decoration: none;
+    }
+    .btn-chance:hover { opacity: 0.88; transform: translateY(-2px); }
+
+    /* ===== 悩みセクション ===== */
+    .worries {
+      background: linear-gradient(180deg, #fff 0%, var(--teal-light) 100%);
+      padding: 56px 20px;
+    }
+    .section-inner {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .worries-title {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    .worries-title h2 {
+      font-size: clamp(1.2rem, 4vw, 1.8rem);
+      font-weight: 900;
+      color: var(--teal-dark);
+      line-height: 1.5;
+    }
+    .worries-title h2 span {
+      color: var(--orange);
+    }
+    .worries-card {
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 6px 30px rgba(0,180,166,0.12);
+      padding: 32px 28px;
+      display: flex;
+      gap: 28px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .worries-img {
+      flex: 0 0 auto;
+      width: clamp(110px, 30%, 180px);
+    }
+    .worries-img img {
+      width: 100%;
+      border-radius: 12px;
+      object-fit: cover;
+    }
+    .worries-list { flex: 1; min-width: 200px; }
+    .worries-list ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .worries-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: clamp(0.85rem, 2.5vw, 1rem);
+      font-weight: 500;
+      color: #444;
+    }
+    .worry-icon {
+      width: 20px;
+      height: 20px;
+      background: var(--teal);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .worry-icon svg { width: 12px; height: 12px; color: #fff; }
+    .worries-cta {
+      margin-top: 32px;
+      text-align: center;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: linear-gradient(135deg, var(--orange) 0%, #ff5f00 100%);
+      color: #fff;
+      font-weight: 900;
+      font-size: clamp(0.9rem, 2.8vw, 1.1rem);
+      padding: 16px 36px;
+      border-radius: 50px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 5px 18px rgba(255,122,46,0.4);
+      transition: transform 0.2s, box-shadow 0.2s;
+      text-decoration: none;
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(255,122,46,0.5);
+    }
+    .worries-note {
+      text-align: center;
+      font-size: 0.72rem;
+      color: #888;
+      margin-top: 10px;
+    }
+
+    /* ===== 強みセクション ===== */
+    .strengths {
+      background: var(--teal);
+      padding: 64px 20px;
+      position: relative;
+      overflow: hidden;
+    }
+    .strengths-bubbles { position: absolute; inset: 0; pointer-events: none; }
+    .sb1 { width: 200px; height: 200px; top: -60px; right: -60px; background: rgba(255,255,255,0.08); border-radius: 50%; position: absolute; }
+    .sb2 { width: 120px; height: 120px; bottom: 20px; left: -30px; background: rgba(255,255,255,0.06); border-radius: 50%; position: absolute; }
+    .strengths-header {
+      text-align: center;
+      margin-bottom: 48px;
+      position: relative;
+      z-index: 2;
+    }
+    .strengths-header .sub { font-size: 0.8rem; color: rgba(255,255,255,0.8); font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px; }
+    .strengths-header h2 {
+      font-size: clamp(2rem, 6vw, 3rem);
+      font-weight: 900;
+      color: #fff;
+      line-height: 1.2;
+    }
+    .strengths-header h2 span { color: #FFDD57; }
+
+    /* 強みカード */
+    .strength-item {
+      max-width: 900px;
+      margin: 0 auto 40px;
+      background: rgba(255,255,255,0.95);
+      border-radius: 20px;
+      padding: 28px 28px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+      position: relative;
+      z-index: 2;
+    }
+    .strength-num {
+      font-size: clamp(2.5rem, 8vw, 4rem);
+      font-weight: 900;
+      color: var(--teal-mid);
+      line-height: 1;
+      flex-shrink: 0;
+      width: 60px;
+      text-align: center;
+    }
+    .strength-img {
+      flex: 0 0 auto;
+      width: clamp(90px, 25%, 140px);
+    }
+    .strength-img img {
+      width: 100%;
+      height: 130px;
+      object-fit: cover;
+      border-radius: 12px;
+    }
+    .strength-body { flex: 1; min-width: 180px; }
+    .strength-body h3 {
+      font-size: clamp(1.1rem, 3.5vw, 1.4rem);
+      font-weight: 900;
+      color: var(--teal-dark);
+      margin-bottom: 8px;
+    }
+    .strength-body p {
+      font-size: clamp(0.82rem, 2.2vw, 0.95rem);
+      color: #555;
+      line-height: 1.8;
+    }
+
+    /* 強み03のアイコングリッド */
+    .strength-icons {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+    .strength-icon-card {
+      background: var(--teal-light);
+      border-radius: 12px;
+      padding: 14px 18px;
+      text-align: center;
+      flex: 1;
+      min-width: 120px;
+    }
+    .strength-icon-card svg { color: var(--teal); margin-bottom: 6px; }
+    .strength-icon-card p { font-size: 0.8rem; font-weight: 700; color: var(--teal-dark); }
+    .strength-icon-card span { font-size: 0.7rem; color: #666; display: block; margin-top: 4px; }
+
+    /* ===== フォームセクション ===== */
+    .form-section {
+      background: var(--teal-light);
+      padding: 64px 20px;
+    }
+    .form-section .section-label {
+      text-align: center;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--teal-dark);
+      letter-spacing: 0.08em;
+      background: rgba(0,180,166,0.12);
+      display: inline-block;
+      padding: 4px 16px;
+      border-radius: 50px;
+      margin-bottom: 12px;
+    }
+    .form-card {
+      max-width: 640px;
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 24px;
+      box-shadow: 0 8px 36px rgba(0,180,166,0.15);
+      padding: 40px 36px;
+    }
+    .form-header {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+    .form-header h2 {
+      font-size: clamp(1.3rem, 4vw, 1.7rem);
+      font-weight: 900;
+      color: #222;
+    }
+    .form-header h2 span { color: var(--orange); }
+    .form-steps {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 24px;
+    }
+    .form-step {
+      flex: 1;
+      height: 6px;
+      border-radius: 3px;
+      background: var(--teal-mid);
+    }
+    .form-step.active { background: var(--teal); }
+    .form-question {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 14px;
+    }
+    .radio-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+    .radio-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #F8FFFE;
+      border: 2px solid var(--teal-mid);
+      border-radius: 10px;
+      padding: 12px 14px;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      font-size: 0.88rem;
+      font-weight: 500;
+    }
+    .radio-item:hover { border-color: var(--teal); background: var(--teal-light); }
+    .radio-item input { accent-color: var(--teal); width: 16px; height: 16px; }
+    .btn-next {
+      width: 100%;
+      background: var(--teal);
+      color: #fff;
+      font-weight: 900;
+      font-size: 1rem;
+      padding: 16px;
+      border-radius: 50px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(0,180,166,0.35);
+      transition: opacity 0.2s, transform 0.15s;
+    }
+    .btn-next:hover { opacity: 0.88; transform: translateY(-2px); }
+
+    /* ===== 実績セクション ===== */
+    .results {
+      background: #fff;
+      padding: 56px 20px;
+    }
+    .results-title {
+      text-align: center;
+      font-size: clamp(1.1rem, 3.5vw, 1.5rem);
+      font-weight: 900;
+      color: #222;
+      margin-bottom: 36px;
+      padding-bottom: 14px;
+      border-bottom: 3px solid var(--teal-mid);
+    }
+    .results-grid {
+      max-width: 760px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .result-card {
+      background: var(--teal-light);
+      border-radius: 16px;
+      padding: 28px 16px;
+      text-align: center;
+      box-shadow: 0 3px 14px rgba(0,180,166,0.1);
+    }
+    .result-card .icon-wrap {
+      width: 52px;
+      height: 52px;
+      background: var(--teal);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 14px;
+    }
+    .result-card .icon-wrap svg { color: #fff; width: 26px; height: 26px; }
+    .result-num {
+      font-size: clamp(1.6rem, 5vw, 2.4rem);
+      font-weight: 900;
+      color: var(--teal-dark);
+      line-height: 1;
+    }
+    .result-label {
+      font-size: clamp(0.75rem, 2vw, 0.88rem);
+      color: #555;
+      margin-top: 6px;
+      font-weight: 500;
+    }
+
+    /* ===== FAQセクション ===== */
+    .faq {
+      background: #F7FFFE;
+      padding: 56px 20px;
+    }
+    .section-title {
+      text-align: center;
+      font-size: clamp(1.3rem, 4vw, 1.8rem);
+      font-weight: 900;
+      color: #222;
+      margin-bottom: 32px;
+    }
+    .faq-list {
+      max-width: 760px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .faq-item {
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      overflow: hidden;
+      border: 1px solid var(--teal-mid);
+    }
+    .faq-question {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 22px;
+      cursor: pointer;
+      gap: 12px;
+    }
+    .faq-q-label {
+      font-weight: 900;
+      font-size: 0.85rem;
+      color: var(--teal-dark);
+      background: var(--teal-light);
+      padding: 3px 10px;
+      border-radius: 6px;
+      flex-shrink: 0;
+    }
+    .faq-question-text {
+      font-size: clamp(0.88rem, 2.5vw, 0.98rem);
+      font-weight: 700;
+      color: #333;
+      flex: 1;
+    }
+    .faq-toggle {
+      width: 26px;
+      height: 26px;
+      background: var(--teal);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: transform 0.3s;
+    }
+    .faq-toggle svg { color: #fff; width: 14px; height: 14px; }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease, padding 0.3s;
+      padding: 0 22px;
+      background: #FAFFFE;
+    }
+    .faq-answer p {
+      font-size: 0.9rem;
+      color: #555;
+      line-height: 1.8;
+      padding: 4px 0 18px;
+      border-top: 1px solid var(--teal-mid);
+    }
+    .faq-a-label {
+      font-weight: 900;
+      color: var(--orange);
+      margin-right: 8px;
+    }
+    .faq-item.open .faq-answer { max-height: 200px; }
+    .faq-item.open .faq-toggle { transform: rotate(45deg); }
+
+    /* ===== フッターCTA ===== */
+    .footer-cta {
+      background: linear-gradient(135deg, var(--teal) 0%, var(--teal-dark) 100%);
+      padding: 56px 20px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .footer-cta-bubbles { position: absolute; inset: 0; pointer-events: none; }
+    .fc1 { width: 160px; height: 160px; background: rgba(255,255,255,0.07); border-radius: 50%; position: absolute; top: -40px; left: -40px; }
+    .fc2 { width: 100px; height: 100px; background: rgba(255,255,255,0.07); border-radius: 50%; position: absolute; bottom: -30px; right: -20px; }
+    .footer-cta h2 {
+      font-size: clamp(1.3rem, 4.5vw, 2rem);
+      font-weight: 900;
+      color: #fff;
+      margin-bottom: 28px;
+      position: relative;
+      z-index: 2;
+    }
+    .footer-btn-group {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 2;
+    }
+    .btn-line-lg {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: #06C755;
+      color: #fff;
+      font-weight: 900;
+      font-size: clamp(0.9rem, 2.8vw, 1.05rem);
+      padding: 16px 32px;
+      border-radius: 50px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 5px 18px rgba(6,199,85,0.4);
+      transition: transform 0.2s, box-shadow 0.2s;
+      text-decoration: none;
+    }
+    .btn-line-lg:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(6,199,85,0.5); }
+    .btn-primary-lg {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: linear-gradient(135deg, var(--orange) 0%, #ff5f00 100%);
+      color: #fff;
+      font-weight: 900;
+      font-size: clamp(0.9rem, 2.8vw, 1.05rem);
+      padding: 16px 32px;
+      border-radius: 50px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 5px 18px rgba(255,122,46,0.4);
+      transition: transform 0.2s, box-shadow 0.2s;
+      text-decoration: none;
+    }
+    .btn-primary-lg:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(255,122,46,0.5); }
+
+    /* ===== フッター ===== */
+    footer {
+      background: #111;
+      color: #aaa;
+      text-align: center;
+      padding: 24px 20px;
+      font-size: 0.78rem;
+    }
+    footer a { color: #ccc; text-decoration: none; }
+    footer a:hover { color: var(--teal); }
+
+    /* ===== スクロールアニメ ===== */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ===== レスポンシブ調整 ===== */
+    @media (max-width: 640px) {
+      .hero-inner { flex-direction: column; text-align: center; align-items: center; }
+      .hero-img { width: 55vw; }
+      .worries-card { flex-direction: column; align-items: center; text-align: left; }
+      .worries-img { width: 60%; }
+      .strength-item { flex-direction: column; align-items: flex-start; }
+      .strength-img { width: 100%; }
+      .strength-img img { height: 160px; width: 100%; }
+      .results-grid { grid-template-columns: 1fr; max-width: 280px; }
+      .form-card { padding: 28px 20px; }
+      .radio-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       ヘッダー
+  ============================================================ -->
+  <header>
+    <div class="header-inner">
+      <div class="logo">うぃずじょぶ<span>！</span></div>
+      <button class="hamburger-btn" aria-label="メニューを開く">
+        <span></span>
+        <span></span>
+        <span></span>
+        <div class="hamburger-label">メニュー</div>
+      </button>
+    </div>
+  </header>
+
+
+  <!-- ============================================================
+       ヒーローセクション
+  ============================================================ -->
+  <section class="hero">
+    <!-- 装飾バブル -->
+    <div class="hero-bubbles" aria-hidden="true">
+      <div class="bubble b1"></div>
+      <div class="bubble b2"></div>
+      <div class="bubble b3"></div>
+      <div class="bubble b4"></div>
+      <div class="bubble b5"></div>
+    </div>
+
+    <!-- メインコピー -->
+    <div class="hero-inner">
+      <div class="hero-text">
+        <h1>
+          住まいと仕事を<br>同時に<strong>GET！</strong>
+          <span class="highlight">初期費用<strong>0</strong>円で<br>新生活スタート！</span>
+        </h1>
+      </div>
+      <div class="hero-img">
+        <img
+          src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&q=80"
+          alt="笑顔のコンサルタント女性"
+          width="280"
+          height="320"
+        />
+      </div>
+    </div>
+
+    <!-- バッジ行 -->
+    <div class="hero-badges">
+      <div class="hero-badges-inner">
+        <!-- 寮費無料 -->
+        <div class="badge">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          寮費無料
+        </div>
+        <!-- 即日入寮 -->
+        <div class="badge">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          即日入寮
+        </div>
+        <!-- 携帯なLOK -->
+        <div class="badge">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+          携帯なLOK
+        </div>
+        <!-- カウントダウン -->
+        <div class="countdown-badge">
+          <span>残り時間</span>
+          <span class="countdown-timer" id="countdown">18時間 1分 30秒</span>
+          <span>残りわずか！</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTAボタン行 -->
+    <div class="hero-cta-bar">
+      <a href="#contact" class="btn-line">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41 2 2 0 0 1 3.59 1.2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.95a16 16 0 0 0 6 6l.97-1.13a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16z"/></svg>
+        LINEで無料相談
+      </a>
+      <a href="#form" class="btn-chance">
+        このチャンスをお見逃しなく！
+      </a>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       悩みセクション
+  ============================================================ -->
+  <section class="worries" id="worries">
+    <div class="section-inner">
+
+      <div class="worries-title fade-in">
+        <h2>
+          仕事の不安、<br>
+          <span>一人で抱えていませんか？</span><br>
+          <small style="font-size:0.75em; color:#777;">一緒に解決しませんか？</small>
+        </h2>
+      </div>
+
+      <div class="worries-card fade-in">
+        <!-- 悩む男性の画像 -->
+        <div class="worries-img">
+          <img
+            src="https://images.unsplash.com/photo-1565618754468-c67640b16148?w=300&q=80"
+            alt="仕事で悩む男性"
+            width="180"
+            height="200"
+          />
+        </div>
+
+        <!-- チェックリスト -->
+        <div class="worries-list">
+          <ul>
+            <li>
+              <div class="worry-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              住む場所がない…
+            </li>
+            <li>
+              <div class="worry-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              初期費用がない…
+            </li>
+            <li>
+              <div class="worry-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              面接対策がわからない…
+            </li>
+            <li>
+              <div class="worry-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              誰にも相談できない…
+            </li>
+            <li>
+              <div class="worry-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              仕事の探し方がわからない…
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="worries-cta fade-in">
+        <a href="#contact" class="btn-primary">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          今すぐ無料相談を始める！
+        </a>
+        <p class="worries-note">株式会社うぃずじょぶ　期間限定オファー｜入寮日の各準備費用※サービス利用にあたって費用は一切かかりません</p>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       3つの強みセクション
+  ============================================================ -->
+  <section class="strengths" id="strengths">
+    <!-- 装飾バブル -->
+    <div class="strengths-bubbles" aria-hidden="true">
+      <div class="sb1"></div>
+      <div class="sb2"></div>
+    </div>
+
+    <div class="strengths-header fade-in">
+      <p class="sub">うぃずじょぶ！</p>
+      <h2><span>3</span>つの強み</h2>
+    </div>
+
+    <!-- 強み 01 -->
+    <div class="strength-item fade-in">
+      <div class="strength-num">01</div>
+      <div class="strength-img">
+        <img
+          src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=300&q=80"
+          alt="専任コンサルタント"
+          width="140"
+          height="130"
+        />
+      </div>
+      <div class="strength-body">
+        <h3>専任</h3>
+        <p>
+          専任コンサルタントがあなたの未来を共に考え、最適なキャリア望に合わせた個別サポートで、挑戦を後押しします。
+        </p>
+      </div>
+    </div>
+
+    <!-- 強み 02 -->
+    <div class="strength-item fade-in">
+      <div class="strength-num">02</div>
+      <div class="strength-img">
+        <img
+          src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=300&q=80"
+          alt="充実したサポート体制"
+          width="140"
+          height="130"
+        />
+      </div>
+      <div class="strength-body">
+        <h3>充実したサポート体制</h3>
+        <p>
+          生活面からキャリアアップまで、安心して働ける環境をサポート。住居支援やスキルアップ研修など、あなたの成長を全面的にバックアップします。
+        </p>
+      </div>
+    </div>
+
+    <!-- 強み 03 -->
+    <div class="strength-item fade-in">
+      <div class="strength-num">03</div>
+      <div class="strength-img">
+        <img
+          src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=300&q=80"
+          alt="プロが徹底サポート"
+          width="140"
+          height="130"
+        />
+      </div>
+      <div class="strength-body">
+        <h3>プロが徹底サポート</h3>
+        <div class="strength-icons">
+          <div class="strength-icon-card">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            <p>キャリア相談</p>
+          </div>
+          <div class="strength-icon-card">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            <p>スキルアップ支援</p>
+          </div>
+        </div>
+        <p style="margin-top:12px;">
+          遠方からの就職や未経験からの挑戦も、私たちが全力でサポート。不安なことは何でもご相談ください。
+        </p>
+      </div>
+    </div>
+
+  </section>
+
+
+  <!-- ============================================================
+       無料キャリア診断フォーム
+  ============================================================ -->
+  <section class="form-section" id="form">
+    <div class="section-inner" style="text-align:center;">
+      <span class="section-label">うぃずじょぶ！転職サポート</span>
+    </div>
+
+    <div class="form-card fade-in" id="career-form">
+      <div class="form-header">
+        <p style="font-size:0.85rem; color:#888; margin-bottom:6px;">あなたに合った仕事、すぐに見つかる。</p>
+        <h2>無料キャリア<span>診断！</span></h2>
+      </div>
+
+      <!-- ステップインジケーター -->
+      <p style="font-size:0.75rem; color:#aaa; margin-bottom:8px; text-align:center;">ステップ1/3</p>
+      <div class="form-steps">
+        <div class="form-step active"></div>
+        <div class="form-step"></div>
+        <div class="form-step"></div>
+      </div>
+
+      <!-- 設問 -->
+      <p class="form-question">現在のご職業は？</p>
+
+      <div class="radio-grid">
+        <label class="radio-item">
+          <input type="radio" name="job-status" value="正社員" />
+          正社員
+        </label>
+        <label class="radio-item">
+          <input type="radio" name="job-status" value="契約社員" />
+          契約社員
+        </label>
+        <label class="radio-item">
+          <input type="radio" name="job-status" value="派遣" />
+          派遣
+        </label>
+        <label class="radio-item">
+          <input type="radio" name="job-status" value="アルバイト・パート" />
+          アルバイト・パート
+        </label>
+        <label class="radio-item" style="grid-column: 1 / -1;">
+          <input type="radio" name="job-status" value="その他" />
+          その他
+        </label>
+      </div>
+
+      <button class="btn-next" type="button" id="btn-next-step">
+        次へ
+      </button>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       実績セクション
+  ============================================================ -->
+  <section class="results" id="results">
+    <div class="section-inner">
+      <h2 class="results-title fade-in">実績</h2>
+      <div class="results-grid">
+
+        <div class="result-card fade-in">
+          <div class="icon-wrap">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <div class="result-num">1,000名<span style="font-size:1rem;">以上</span></div>
+          <div class="result-label">入社実績</div>
+        </div>
+
+        <div class="result-card fade-in">
+          <div class="icon-wrap">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3H14z"/><path d="M7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg>
+          </div>
+          <div class="result-num">98<span style="font-size:1rem;">%</span></div>
+          <div class="result-label">満足度</div>
+        </div>
+
+        <div class="result-card fade-in">
+          <div class="icon-wrap">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </div>
+          <div class="result-num">95<span style="font-size:1rem;">%</span></div>
+          <div class="result-label">サポート継続率</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       FAQセクション
+  ============================================================ -->
+  <section class="faq" id="faq">
+    <div class="section-inner">
+      <h2 class="section-title fade-in">FAQ</h2>
+
+      <div class="faq-list">
+
+        <!-- Q1 -->
+        <div class="faq-item fade-in">
+          <div class="faq-question" role="button" tabindex="0" aria-expanded="false">
+            <span class="faq-q-label">Q</span>
+            <span class="faq-question-text">料金はかかりますか？</span>
+            <div class="faq-toggle">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </div>
+          </div>
+          <div class="faq-answer">
+            <p><span class="faq-a-label">A.</span>無料です。求職者の方から費用をいただくことは一切ございません。安心してご相談ください。</p>
+          </div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="faq-item fade-in">
+          <div class="faq-question" role="button" tabindex="0" aria-expanded="false">
+            <span class="faq-q-label">Q</span>
+            <span class="faq-question-text">未経験でも大丈夫ですか？</span>
+            <div class="faq-toggle">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </div>
+          </div>
+          <div class="faq-answer">
+            <p><span class="faq-a-label">A.</span>はい、大丈夫です。未経験者を積極採用している求人を多数ご用意しています。入職後のスキルアップ研修も充実しています。</p>
+          </div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="faq-item fade-in">
+          <div class="faq-question" role="button" tabindex="0" aria-expanded="false">
+            <span class="faq-q-label">Q</span>
+            <span class="faq-question-text">相談方法は？</span>
+            <div class="faq-toggle">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </div>
+          </div>
+          <div class="faq-answer">
+            <p><span class="faq-a-label">A.</span>オンラインでのご相談が可能です。お電話・LINEでもお気軽にお問い合わせいただけます。全国どこからでもご利用いただけます。</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       フッターCTA
+  ============================================================ -->
+  <section class="footer-cta" id="contact">
+    <div class="footer-cta-bubbles" aria-hidden="true">
+      <div class="fc1"></div>
+      <div class="fc2"></div>
+    </div>
+    <h2>今すぐ無料相談</h2>
+    <div class="footer-btn-group">
+      <a href="#" class="btn-line-lg">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41 2 2 0 0 1 3.59 1.2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.95a16 16 0 0 0 6 6l.97-1.13a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16z"/></svg>
+        LINEで相談する
+      </a>
+      <a href="#form" class="btn-primary-lg">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        無料キャリア診断
+      </a>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       フッター
+  ============================================================ -->
+  <footer>
+    <p>
+      <a href="#">プライバシーポリシー</a> ｜
+      <a href="#">特定商取引法に基づく表記</a> ｜
+      <a href="#">利用規約</a>
+    </p>
+    <p style="margin-top:8px;">&copy; 2025 うぃずじょぶ！転職サポート</p>
+  </footer>
+
+
+  <!-- ============================================================
+       JavaScript
+  ============================================================ -->
+  <script>
+    /* =============================================
+       カウントダウンタイマー
+    ============================================= */
+    (function () {
+      // 初回ロード時から18時間1分30秒先をターゲットとして設定
+      const STORAGE_KEY = 'wzj_countdown_end';
+      let endTime = parseInt(sessionStorage.getItem(STORAGE_KEY) || '0', 10);
+
+      if (!endTime || endTime < Date.now()) {
+        // 18時間 1分 30秒 = (18*3600 + 1*60 + 30) * 1000 ms
+        endTime = Date.now() + (18 * 3600 + 1 * 60 + 30) * 1000;
+        sessionStorage.setItem(STORAGE_KEY, String(endTime));
+      }
+
+      const el = document.getElementById('countdown');
+
+      function update() {
+        const diff = endTime - Date.now();
+        if (diff <= 0) {
+          el.textContent = '終了';
+          return;
+        }
+        const h = Math.floor(diff / 3600000);
+        const m = Math.floor((diff % 3600000) / 60000);
+        const s = Math.floor((diff % 60000) / 1000);
+        el.textContent = `${h}時間 ${String(m).padStart(2,'0')}分 ${String(s).padStart(2,'0')}秒`;
+        requestAnimationFrame(update);
+      }
+      update();
+    })();
+
+
+    /* =============================================
+       FAQ アコーディオン
+    ============================================= */
+    document.querySelectorAll('.faq-question').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        const item = this.closest('.faq-item');
+        const isOpen = item.classList.contains('open');
+
+        // 他を全部閉じる
+        document.querySelectorAll('.faq-item.open').forEach(function (el) {
+          el.classList.remove('open');
+          el.querySelector('[aria-expanded]').setAttribute('aria-expanded', 'false');
+        });
+
+        if (!isOpen) {
+          item.classList.add('open');
+          btn.setAttribute('aria-expanded', 'true');
+        }
+      });
+
+      // キーボード操作対応
+      btn.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          btn.click();
+        }
+      });
+    });
+
+
+    /* =============================================
+       スクロールフェードイン
+    ============================================= */
+    (function () {
+      const targets = document.querySelectorAll('.fade-in');
+      const observer = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.15 }
+      );
+      targets.forEach(function (el) { observer.observe(el); });
+    })();
+
+
+    /* =============================================
+       フォーム「次へ」ボタン（デモ動作）
+    ============================================= */
+    document.getElementById('btn-next-step').addEventListener('click', function () {
+      const selected = document.querySelector('input[name="job-status"]:checked');
+      if (!selected) {
+        // 未選択時は最初のオプションにフォーカス
+        document.querySelector('.radio-item').style.borderColor = 'var(--orange)';
+        setTimeout(function () {
+          document.querySelector('.radio-item').style.borderColor = '';
+        }, 1000);
+        return;
+      }
+
+      // ステップ2へのデモ遷移（見た目のみ）
+      const card = document.getElementById('career-form');
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(12px)';
+
+      setTimeout(function () {
+        document.querySelector('.form-steps .form-step:nth-child(2)').classList.add('active');
+        document.querySelector('.form-question').textContent = 'ご希望の勤務地は？';
+        document.querySelector('.form-steps').previousElementSibling.textContent = 'ステップ2/3';
+
+        const grid = document.querySelector('.radio-grid');
+        grid.innerHTML = `
+          <label class="radio-item">
+            <input type="radio" name="location" value="北海道・東北" />
+            北海道・東北
+          </label>
+          <label class="radio-item">
+            <input type="radio" name="location" value="関東" />
+            関東
+          </label>
+          <label class="radio-item">
+            <input type="radio" name="location" value="中部・関西" />
+            中部・関西
+          </label>
+          <label class="radio-item" style="grid-column: 1 / -1;">
+            <input type="radio" name="location" value="その他" />
+            その他
+          </label>
+        `;
+
+        card.style.opacity = '1';
+        card.style.transform = 'translateY(0)';
+        card.style.transition = 'opacity 0.3s, transform 0.3s';
+      }, 250);
+    });
+
+
+    /* =============================================
+       ハンバーガーメニュー（簡易）
+    ============================================= */
+    document.querySelector('.hamburger-btn').addEventListener('click', function () {
+      alert('メニューはここに実装します。');
+    });
+  </script>
+</body>
+</html>
